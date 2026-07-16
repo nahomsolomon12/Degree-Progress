@@ -22,7 +22,7 @@ export function CategoryBreakdown({ courses }: CategoryBreakdownProps) {
 
   return (
     <div className="rounded-2xl border border-[var(--border-hairline)] bg-[var(--surface-1)] p-5">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-sm font-semibold tracking-wide text-white">Progress by Category</h2>
         <Legend />
       </div>
@@ -67,7 +67,7 @@ export function CategoryBreakdown({ courses }: CategoryBreakdownProps) {
 
 function Legend() {
   return (
-    <div className="flex items-center gap-3 text-[11px] text-[var(--text-muted)]">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-[var(--text-muted)]">
       <span className="flex items-center gap-1">
         <Check size={12} style={{ color: 'var(--status-good)' }} /> Completed
       </span>

@@ -33,7 +33,7 @@ export function BadgeShelf({ badges }: { badges: Badge[] }) {
           {earnedCount} / {badges.length}
         </span>
       </div>
-      <div className="grid grid-cols-4 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 sm:gap-3">
         {badges.map((badge) => {
           const Icon = ICONS[badge.icon] ?? Trophy;
           return (

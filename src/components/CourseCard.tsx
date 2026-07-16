@@ -22,46 +22,46 @@ export function CourseCard({ course, onCycleStatus, onEdit, onDelete }: CourseCa
 
   return (
     <div
-      className="group flex items-center gap-3 rounded-xl border border-[var(--border-hairline)] bg-[var(--surface-1)] p-3 transition-colors hover:bg-[var(--surface-2)]"
+      className="flex items-start gap-2.5 rounded-xl border border-[var(--border-hairline)] bg-[var(--surface-1)] p-3 transition-colors hover:bg-[var(--surface-2)] sm:gap-3"
       style={{ borderLeft: `3px solid ${meta.color}` }}
     >
       <button
         onClick={() => onCycleStatus(course.id)}
         title={`Mark as ${STATUS_ORDER[(STATUS_ORDER.indexOf(course.status) + 1) % STATUS_ORDER.length]}`}
-        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-transform hover:scale-110 active:scale-95"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-transform active:scale-95 sm:hover:scale-110"
         style={{ backgroundColor: `${meta.color}22`, color: meta.color }}
       >
         <Icon size={16} />
       </button>
 
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center gap-2">
+      <div className="min-w-0 flex-1 pt-1 sm:pt-0.5">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <span className="shrink-0 rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--text-muted)]">
             {course.code}
           </span>
-          <span className="truncate text-sm font-medium text-white">{course.title}</span>
+          <span className="break-words text-sm font-medium leading-snug text-white">{course.title}</span>
         </div>
-        <div className="mt-0.5 flex items-center gap-2 text-[11px] text-[var(--text-muted)]">
+        <div className="mt-1 flex items-center gap-2 text-[11px] text-[var(--text-muted)]">
           <span>{course.credits} credits</span>
           <span>&middot;</span>
           <span style={{ color: meta.color }}>{meta.label}</span>
         </div>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+      <div className="flex shrink-0 items-center gap-1">
         <button
           onClick={() => onEdit(course)}
           title="Edit course"
-          className="flex h-7 w-7 items-center justify-center rounded-lg text-[var(--text-muted)] hover:bg-[var(--surface-0)] hover:text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-0)] hover:text-white"
         >
-          <Pencil size={13} />
+          <Pencil size={14} />
         </button>
         <button
           onClick={() => onDelete(course.id)}
           title="Delete course"
-          className="flex h-7 w-7 items-center justify-center rounded-lg text-[var(--text-muted)] hover:bg-[var(--surface-0)] hover:text-[var(--status-critical)]"
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-0)] hover:text-[var(--status-critical)]"
         >
-          <Trash2 size={13} />
+          <Trash2 size={14} />
         </button>
       </div>
     </div>
