@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+
+  /* dataviz reference palette — dark surface */
+  --surface-0: #0d0d0d;
+  --surface-1: #1a1a19;
+  --surface-2: #232322;
+  --text-primary: #ffffff;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --gridline: #2c2c2a;
+  --border-hairline: rgba(255, 255, 255, 0.1);
+
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-critical: #e66767;
+  --status-neutral: #383835;
+
+  --accent-blue: #3987e5;
+  --accent-green: #008300;
+  --accent-magenta: #d55181;
+  --accent-yellow: #c98500;
+  --accent-aqua: #199e70;
+  --accent-orange: #d95926;
+  --accent-violet: #9085e9;
+  --accent-red: #e66767;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: var(--surface-0);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background-image:
+    radial-gradient(circle at 15% 0%, rgba(57, 135, 229, 0.1), transparent 45%),
+    radial-gradient(circle at 85% 15%, rgba(144, 133, 233, 0.08), transparent 40%);
+  background-attachment: fixed;
+}
+
+::selection {
+  background-color: var(--accent-blue);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-0);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--surface-2);
+  border-radius: 8px;
+  border: 2px solid var(--surface-0);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.input {
+  width: 100%;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-hairline);
+  background-color: var(--surface-2);
+  color: white;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.8125rem;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.input:focus {
+  border-color: var(--accent-blue);
+}
+
