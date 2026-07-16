@@ -36,14 +36,14 @@ export function CourseBoard({ courses, onCycleStatus, onEdit, onDelete }: Course
 
   return (
     <div className="rounded-2xl border border-[var(--border-hairline)] bg-[var(--surface-1)] p-5">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-sm font-semibold tracking-wide text-white">Course Plan</h2>
-        <div className="flex flex-wrap gap-1 rounded-lg bg-[var(--surface-2)] p-1">
+        <div className="-mx-1 flex gap-1 overflow-x-auto rounded-lg bg-[var(--surface-2)] p-1 sm:mx-0">
           {FILTERS.map((f) => (
             <button
               key={f.key}
               onClick={() => setFilter(f.key)}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${
+              className={`shrink-0 rounded-md px-2.5 py-1.5 text-xs font-medium transition-colors sm:py-1 ${
                 filter === f.key ? 'bg-[var(--accent-blue)] text-white' : 'text-[var(--text-muted)] hover:text-white'
               }`}
             >
