@@ -7,9 +7,9 @@ browser's `localStorage` — nothing leaves your machine.
 
 ## Editing your courses
 
-The app ships with 34 placeholder courses (117 credits total) across four
-categories: General Education, IT Fundamentals, Core Computer Science, and
-Capstone & Electives. They're meant to be replaced with your actual plan:
+The app ships with 37 courses (117 credits total) across four categories:
+General Education, IT Fundamentals, Core Computer Science, and Capstone &
+Electives. Edit them to match your actual plan:
 
 - **In the UI:** click the pencil icon on any course to edit its code,
   title, credits, category, or status; use "+ Add Course" to add one, the
@@ -44,14 +44,17 @@ This is a static single-page app (Vite + React) — `dist/` can be deployed
 to any static host. Two of the easiest options:
 
 **Vercel**
+
 ```bash
 npm i -g vercel
 vercel --prod
 ```
+
 (Framework preset "Vite" is auto-detected; build command `npm run build`,
 output directory `dist`.)
 
 **Netlify**
+
 ```bash
 npm i -g netlify-cli
 netlify deploy --prod --dir=dist
