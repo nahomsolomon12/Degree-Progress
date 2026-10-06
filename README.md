@@ -1,9 +1,9 @@
 # Degree Progress — WGU B.S. Computer Science Tracker
 
-A small, gamified tracker for a WGU B.S. Computer Science degree plan. Mark
-courses as not started / in progress / completed and watch your level, XP
-bar, category progress, and badges update live. All data is saved to your
-browser's `localStorage` — nothing leaves your machine.
+A small, gamified tracker for a WGU B.S. Computer Science degree plan. Track
+course status, study-plan progress, level, XP, category progress, and badges
+in one place. All data is saved to your browser's `localStorage` — nothing
+leaves your machine.
 
 ## Editing your courses
 
@@ -22,9 +22,46 @@ Electives. Edit them to match your actual plan:
   you've made changes in the browser, your edits live in `localStorage`
   under the key `wgu-degree-courses`.
 
-Categories are defined in [`src/types.ts`](src/types.ts). Leveling and
-badge rules live in [`src/lib/gamification.ts`](src/lib/gamification.ts) —
-1 level per 15 completed credits, plus milestone and category badges.
+## Course study plans
+
+Each course has its own study-plan page. Open it with the checklist icon on
+the course card. The study plan contains these seven steps:
+
+1. Take a practice test.
+2. Study one section per day for approximately 5–7 days, completing 150
+   practice questions per day or 300 questions with a review of every question.
+3. Schedule the objective assessment (OA).
+4. If needed, schedule time with an instructor and confirm competency.
+5. If the OA is not passed, begin the failed-section plan within one week and
+   complete 150 questions for each failed section.
+6. Finish the retake study plan within three days.
+7. Retake and pass the OA.
+
+Checklist progress is stored separately under the `wgu-course-checklists`
+`localStorage` key. The course completion checkbox stays disabled until all
+seven steps are complete. Marking a course complete changes its status to
+`completed` and includes its credits in the overall progress percentage.
+
+Categories are defined in [`src/types.ts`](src/types.ts). The seed course list
+is in [`src/data/courses.ts`](src/data/courses.ts), checklist text is in
+[`src/data/courseChecklist.ts`](src/data/courseChecklist.ts), and leveling and
+badge rules live in [`src/lib/gamification.ts`](src/lib/gamification.ts).
+The tracker awards one level per 15 completed credits, plus milestone and
+category badges.
+
+## Local data
+
+The app uses two browser-local storage keys:
+
+| Key | Contents |
+| --- | --- |
+| `wgu-degree-courses` | Course details, credits, categories, and statuses |
+| `wgu-course-checklists` | Checklist completion state for each course |
+
+Local storage is tied to the browser and site origin. A local development
+site, deployed site, and different browser profile each have separate data.
+To move data between origins, export the values from the browser developer
+console and import them into the other origin.
 
 ## Local development
 
