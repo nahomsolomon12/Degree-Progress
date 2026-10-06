@@ -10,6 +10,8 @@ export interface Course {
   notes?: string;
 }
 
+export type CourseChecklist = Record<string, boolean>;
+
 export const CATEGORIES = [
   'General Education',
   'IT Fundamentals',

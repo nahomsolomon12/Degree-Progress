@@ -13,7 +13,9 @@ Electives. Edit them to match your actual plan:
 
 - **In the UI:** click the pencil icon on any course to edit its code,
   title, credits, category, or status; use "+ Add Course" to add one, the
-  trash icon to remove one, or "Reset to defaults" to start over.
+  checklist icon to open its study plan, the trash icon to remove one, or
+  "Reset to defaults" to start over. A course can only be marked complete
+  after all seven study-plan steps are checked.
 - **In code:** edit the seed list directly in
   [`src/data/courses.ts`](src/data/courses.ts). This only affects what
   loads for a brand-new visitor (or after "Reset to defaults") — once

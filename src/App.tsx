@@ -3,20 +3,27 @@ import { BadgeShelf } from './components/BadgeShelf';
 import { CategoryBreakdown } from './components/CategoryBreakdown';
 import { CelebrationToast, type ToastItem } from './components/CelebrationToast';
 import { CourseBoard } from './components/CourseBoard';
+import { CourseDetail } from './components/CourseDetail';
 import { CourseModal } from './components/CourseModal';
 import { Header } from './components/Header';
 import { StatsPanel } from './components/StatsPanel';
 import { SEED_COURSES } from './data/courses';
+import { CHECKLIST_ITEMS } from './data/courseChecklist';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { fireCelebration, fireConfetti } from './lib/confetti';
 import { getBadges, getLevelInfo } from './lib/gamification';
-import type { Course, CourseStatus } from './types';
+import type { Course, CourseChecklist, CourseStatus } from './types';
 
 const STATUS_ORDER: CourseStatus[] = ['not-started', 'in-progress', 'completed'];
 
 function App() {
   const [courses, setCourses] = useLocalStorage<Course[]>('wgu-degree-courses', SEED_COURSES);
   const [modalCourse, setModalCourse] = useState<Course | null | undefined>(undefined);
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
+  const [courseChecklists, setCourseChecklists] = useLocalStorage<Record<string, CourseChecklist>>(
+    'wgu-course-checklists',
+    {},
+  );
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
   const totalCredits = courses.reduce((s, c) => s + c.credits, 0);
@@ -84,8 +91,33 @@ function App() {
       prev.map((c) => {
         if (c.id !== id) return c;
         const nextIndex = (STATUS_ORDER.indexOf(c.status) + 1) % STATUS_ORDER.length;
+        if (STATUS_ORDER[nextIndex] === 'completed') {
+          const checklist = courseChecklists[id] ?? {};
+          if (!CHECKLIST_ITEMS.every((_, index) => checklist[index] === true)) {
+            setSelectedCourseId(id);
+            return c;
+          }
+        }
         return { ...c, status: STATUS_ORDER[nextIndex] };
       }),
+    );
+  }
+
+  function handleToggleChecklist(courseId: string, itemIndex: number) {
+    setCourseChecklists((prev) => ({
+      ...prev,
+      [courseId]: {
+        ...(prev[courseId] ?? {}),
+        [itemIndex]: !(prev[courseId]?.[itemIndex] ?? false),
+      },
+    }));
+  }
+
+  function handleCompleteCourse(courseId: string, completed: boolean) {
+    setCourses((prev) =>
+      prev.map((course) =>
+        course.id === courseId ? { ...course, status: completed ? 'completed' : 'in-progress' } : course,
+      ),
     );
   }
 
@@ -105,7 +137,11 @@ function App() {
   function handleReset() {
     if (!confirm('Reset all courses back to the default template? Your edits will be lost.')) return;
     setCourses(SEED_COURSES);
+    setCourseChecklists({});
+    setSelectedCourseId(null);
   }
+
+  const selectedCourse = courses.find((course) => course.id === selectedCourseId);
 
   return (
     <div className="mx-auto flex min-h-full max-w-5xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
@@ -128,12 +164,23 @@ function App() {
         </div>
       </div>
 
-      <CourseBoard
-        courses={courses}
-        onCycleStatus={handleCycleStatus}
-        onEdit={(course) => setModalCourse(course)}
-        onDelete={handleDeleteCourse}
-      />
+      {selectedCourse ? (
+        <CourseDetail
+          course={selectedCourse}
+          checklist={courseChecklists[selectedCourse.id] ?? {}}
+          onToggleChecklist={handleToggleChecklist}
+          onCompleteCourse={handleCompleteCourse}
+          onBack={() => setSelectedCourseId(null)}
+        />
+      ) : (
+        <CourseBoard
+          courses={courses}
+          onCycleStatus={handleCycleStatus}
+          onEdit={(course) => setModalCourse(course)}
+          onDelete={handleDeleteCourse}
+          onOpenDetails={(course) => setSelectedCourseId(course.id)}
+        />
+      )}
 
       <footer className="pb-4 pt-2 text-center text-xs text-[var(--text-muted)]">
         Progress is saved locally in your browser. Click a course's status icon to cycle it, or use the pencil to

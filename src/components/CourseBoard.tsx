@@ -17,9 +17,10 @@ interface CourseBoardProps {
   onCycleStatus: (id: string) => void;
   onEdit: (course: Course) => void;
   onDelete: (id: string) => void;
+  onOpenDetails: (course: Course) => void;
 }
 
-export function CourseBoard({ courses, onCycleStatus, onEdit, onDelete }: CourseBoardProps) {
+export function CourseBoard({ courses, onCycleStatus, onEdit, onDelete, onOpenDetails }: CourseBoardProps) {
   const [filter, setFilter] = useState<Filter>('all');
 
   const filtered = useMemo(
@@ -74,6 +75,7 @@ export function CourseBoard({ courses, onCycleStatus, onEdit, onDelete }: Course
                   onCycleStatus={onCycleStatus}
                   onEdit={onEdit}
                   onDelete={onDelete}
+                  onOpenDetails={onOpenDetails}
                 />
               ))}
             </div>

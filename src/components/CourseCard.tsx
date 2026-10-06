@@ -1,4 +1,4 @@
-import { Check, Circle, Clock, Pencil, Trash2 } from 'lucide-react';
+import { Check, Circle, Clock, ListChecks, Pencil, Trash2 } from 'lucide-react';
 import type { Course, CourseStatus } from '../types';
 
 const STATUS_ORDER: CourseStatus[] = ['not-started', 'in-progress', 'completed'];
@@ -14,9 +14,10 @@ interface CourseCardProps {
   onCycleStatus: (id: string) => void;
   onEdit: (course: Course) => void;
   onDelete: (id: string) => void;
+  onOpenDetails: (course: Course) => void;
 }
 
-export function CourseCard({ course, onCycleStatus, onEdit, onDelete }: CourseCardProps) {
+export function CourseCard({ course, onCycleStatus, onEdit, onDelete, onOpenDetails }: CourseCardProps) {
   const meta = STATUS_META[course.status];
   const Icon = meta.icon;
 
@@ -49,6 +50,13 @@ export function CourseCard({ course, onCycleStatus, onEdit, onDelete }: CourseCa
       </div>
 
       <div className="flex shrink-0 items-center gap-1">
+        <button
+          onClick={() => onOpenDetails(course)}
+          title="Open study plan"
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-0)] hover:text-white"
+        >
+          <ListChecks size={14} />
+        </button>
         <button
           onClick={() => onEdit(course)}
           title="Edit course"
